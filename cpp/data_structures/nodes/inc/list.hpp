@@ -6,57 +6,57 @@
 #include <iostream>
 
 template<typename T>
-class LList {
+class Linked_list {
 public:
-	LList(const T &t)
-	: _size{1} {
-		tail = head = new DataNode<T>(t);
+	Linked_list(const T &t)
+	: m_size{1} {
+		p_tail = p_head = new DataNode<T>(t);
 	}
 
-	LList()
-	: head{},tail{},_size{} {
+	Linked_list()
+	: p_head{},p_tail{},m_size{} {
 
 	}
 
-	~LList() {
-		while(head != nullptr)
+	~Linked_list() {
+		while(p_head != nullptr)
 		{
-			DataNode<T> *temp= head;
-			head = head->next;
+			DataNode<T> *temp= p_head;
+			p_head = p_head->next;
 			delete(temp);
 		}
-		tail=head;
-		_size=0;
+		p_tail = p_head;
+		m_size = 0;
 	}
 
 
 	size_t size() {
-		return _size;
+		return m_size;
 	}
 
 	void add_head(T t) {
-		if(head == nullptr)
+		if(p_head == nullptr)
 		{
-			tail = head = new DataNode<T>(t);
+			p_tail = p_head = new DataNode<T>(t);
 		} else {
-			head = new DataNode<T>(t,head);
+			p_head = new DataNode<T>(t,p_head);
 		}
-		_size++;
+		m_size++;
 	}
 
 	void add_tail(T t) {
-		if(head == nullptr)
+		if(p_head == nullptr)
 		{
-			tail = head = new DataNode<T>(t);
+			p_tail = p_head = new DataNode<T>(t);
 		} else {
-			tail = tail->next = new DataNode<T>(t);
+			p_tail = p_tail->next = new DataNode<T>(t);
 		}
-		_size++;
+		m_size++;
 	}
 
 	inline bool empty()
 	{
-		if(head == nullptr)
+		if(p_head == nullptr)
 			return true;
 		else
 			return false;
@@ -66,68 +66,68 @@ public:
 		if(empty())
 			return std::nullopt;
 		else
-			return std::optional<T> {head->data};
+			return std::optional<T> {p_head->data};
 	}
 
 	std::optional<T> get_tail() {
 		if(empty())
 			return std::nullopt;
 		else
-			return std::optional<T> {tail->data};
+			return std::optional<T> {p_tail->data};
 	}
 
 
 	std::optional<T> delete_head() {
-		DataNode<T> *temp = head;
+		DataNode<T> *temp = p_head;
 		std::optional<T> head_val {};
 		//Head == nullptr, the list is empty
-		if(head != nullptr)
+		if(p_head != nullptr)
 		{
-			head = head->next;
+			p_head = p_head->next;
 			head_val = temp->data;
 			delete(temp);
-			_size--;
+			m_size--;
 		}
-		if(head == nullptr)
+		if(p_head == nullptr)
 		{
-			tail = head;
+			p_tail = p_head;
 		}
 		return head_val;
 	}
 
 	std::optional<T> delete_tail() {
-		DataNode<T> *temp = head;
+		DataNode<T> *temp = p_head;
 		std::optional<T> tail_val {};
-		if(head != nullptr)
+		if(p_head != nullptr)
 		{
 			//Only one element in the list
-			if(head->next == nullptr)
+			if(p_head->next == nullptr)
 			{
 				tail_val = temp->data;
 				delete(temp);
-				tail = head = nullptr;
+				p_tail = p_head = nullptr;
 			}
 			else
 			{
 				//Move temp to a postiion before tail
-				while(temp->next != tail)
+				while(temp->next != p_tail)
 				{
 					temp=temp->next;
 				}
 				temp->next=nullptr;
-				tail_val = tail->data;
-				delete(tail);
-				tail=temp;
+				tail_val = p_tail->data;
+				delete(p_tail);
+				p_tail=temp;
 				
 			}
-			_size--;
+			m_size--;
 		}
 		return tail_val;
 	}
 
 	void print() {
 		std::cout<<"Printing the list"<<std::endl;
-		for(DataNode<T> *itr = head; itr != nullptr; itr=itr->next)
+		for(DataNode<T> *itr = p_head; itr != nullptr; itr=itr->next)
 		{
 			std::cout<< itr->data << ",";
 		}
@@ -142,9 +142,9 @@ public:
 
 
 private:
-	DataNode<T> *head;
-	DataNode<T> *tail;
-	size_t _size;
+	DataNode<T> *p_head;
+	DataNode<T> *p_tail;
+	size_t m_size;
 
 };
 

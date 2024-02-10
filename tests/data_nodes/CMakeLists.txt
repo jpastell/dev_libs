@@ -13,7 +13,7 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/../../googletest googletest EXCLUDE_FROM_AL
 enable_testing()
 
 # add; link; and catalog test_hello tests
-add_executable(test_defaults node_test.cpp)
+add_executable(test_nodes node_test.cpp)
 
-target_include_directories(test_defaults PUBLIC ${CMAKE_SOURCE_DIR}/../../googletest)
-target_link_libraries(test_defaults gtest gtest_main)
+target_include_directories(test_nodes PUBLIC ${CMAKE_SOURCE_DIR}/../../googletest)
+target_link_libraries(test_nodes gtest gtest_main)

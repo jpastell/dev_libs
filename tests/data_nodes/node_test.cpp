@@ -9,19 +9,19 @@
 #include <algorithm>
 
 
-TEST(LList_construction, element_and_empty)
+TEST(Linked_list_construction, element_and_empty)
 {
     auto data = "hola";
-	auto single_list  = LList<decltype(data)> {data};
+	auto single_list  = Linked_list<decltype(data)> {data};
     EXPECT_EQ(single_list.size(), 1);
-    auto empty_list  = LList<decltype(data)> {};
+    auto empty_list  = Linked_list<decltype(data)> {};
     EXPECT_EQ(empty_list.size(), 0);
 }
 
-TEST(LList_construction, addition_head_tail_checks)
+TEST(Linked_list_construction, addition_head_tail_checks)
 {
     auto data_array = std::array<int,4>{1,2,3,4};
-    auto l_list  = LList<std::remove_pointer<decltype(data_array.data())>::type> {};
+    auto l_list  = Linked_list<std::remove_pointer<decltype(data_array.data())>::type> {};
 
     //array iterators
     auto cbegin = data_array.cbegin();
