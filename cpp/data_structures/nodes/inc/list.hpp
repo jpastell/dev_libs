@@ -10,7 +10,7 @@ class Linked_list {
 public:
 	Linked_list(const T &t)
 	: m_size{1} {
-		p_tail = p_head = new DataNode<T>(t);
+		p_tail = p_head = new Data_node<T>(t);
 	}
 
 	Linked_list()
@@ -21,7 +21,7 @@ public:
 	~Linked_list() {
 		while(p_head != nullptr)
 		{
-			DataNode<T> *temp= p_head;
+			Data_node<T> *temp= p_head;
 			p_head = p_head->next;
 			delete(temp);
 		}
@@ -37,9 +37,9 @@ public:
 	void add_head(T t) {
 		if(p_head == nullptr)
 		{
-			p_tail = p_head = new DataNode<T>(t);
+			p_tail = p_head = new Data_node<T>(t);
 		} else {
-			p_head = new DataNode<T>(t,p_head);
+			p_head = new Data_node<T>(t,p_head);
 		}
 		m_size++;
 	}
@@ -47,9 +47,9 @@ public:
 	void add_tail(T t) {
 		if(p_head == nullptr)
 		{
-			p_tail = p_head = new DataNode<T>(t);
+			p_tail = p_head = new Data_node<T>(t);
 		} else {
-			p_tail = p_tail->next = new DataNode<T>(t);
+			p_tail = p_tail->next = new Data_node<T>(t);
 		}
 		m_size++;
 	}
@@ -78,7 +78,7 @@ public:
 
 
 	std::optional<T> delete_head() {
-		DataNode<T> *temp = p_head;
+		Data_node<T> *temp = p_head;
 		std::optional<T> head_val {};
 		//Head == nullptr, the list is empty
 		if(p_head != nullptr)
@@ -96,7 +96,7 @@ public:
 	}
 
 	std::optional<T> delete_tail() {
-		DataNode<T> *temp = p_head;
+		Data_node<T> *temp = p_head;
 		std::optional<T> tail_val {};
 		if(p_head != nullptr)
 		{
@@ -127,7 +127,7 @@ public:
 
 	void print() {
 		std::cout<<"Printing the list"<<std::endl;
-		for(DataNode<T> *itr = p_head; itr != nullptr; itr=itr->next)
+		for(Data_node<T> *itr = p_head; itr != nullptr; itr=itr->next)
 		{
 			std::cout<< itr->data << ",";
 		}
@@ -135,15 +135,16 @@ public:
 		std::cout<<std::endl;
 	}
 
-	// std::optional<T> delete_node(size_t node_idx)
-	// {
+	const T* cbegin()
+	{
+		return static_cast<const T*>(p_head);
+	}
 
-	// }
 
 
 private:
-	DataNode<T> *p_head;
-	DataNode<T> *p_tail;
+	Data_node<T> *p_head;
+	Data_node<T> *p_tail;
 	size_t m_size;
 
 };
