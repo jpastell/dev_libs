@@ -302,6 +302,19 @@ TEST(Linked_list, find_delete_empty)
     EXPECT_EQ(l_list.delete_node(g_data_array.at(0)),false);
 }
 
+TEST(Linked_list, find_delete_1_element)
+{
+    //Linked list used for testing
+    array_t element = g_data_array.at(0);
+    Linked_list<array_t> l_list {element};
+    //Look for head
+    EXPECT_EQ(l_list.is_in_list(element),true);
+    //Try to delete form an empty list
+    EXPECT_EQ(l_list.delete_node(element),true);
+    //Check tail and head are nullptr
+    EXPECT_EQ(l_list.get_head_node(),nullptr);
+    EXPECT_EQ(l_list.get_tail_node(),nullptr);
+}
 
 int main(int nArgs, char** vArgs) {
     ::testing::InitGoogleTest(&nArgs, vArgs);
