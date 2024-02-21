@@ -143,8 +143,15 @@ void find_remove_test(size_t remove_postition)
                             t_list.cend(),
                             g_data_array.at(remove_postition));
     //Check the that the element is not there
-    EXPECT_EQ(test,t_list.cend());   
+    EXPECT_EQ(test,t_list.cend());
+    if(l_list.size() == 1)
+    {
+        std::cout << "Here" <<std::endl;
+        //Make sure the head and tail point to the same
+        EXPECT_EQ(l_list.get_head_node(),l_list.get_tail_node());
+    }
 }
+
 
 
 TEST(Linked_list, element_and_empty)
@@ -314,6 +321,17 @@ TEST(Linked_list, find_delete_1_element)
     //Check tail and head are nullptr
     EXPECT_EQ(l_list.get_head_node(),nullptr);
     EXPECT_EQ(l_list.get_tail_node(),nullptr);
+}
+
+TEST(Linked_list, delete_tail_size2)
+{
+    //Linked list used for testing
+    array_t element = g_data_array.at(0);
+    array_t element_2 =  element+1;
+    Linked_list<array_t> l_list {element};
+    l_list.add_tail(element_2);
+    EXPECT_EQ(l_list.delete_node(element_2),true);
+    EXPECT_EQ(l_list.get_head_node(),l_list.get_tail_node());
 }
 
 int main(int nArgs, char** vArgs) {

@@ -37,7 +37,7 @@ public:
 	}
 
 	Smart_linked_list(const Smart_linked_list<T> &other)
-	:m_head_ptr{},m_tail_ptr{},m_size{1}
+	:m_head_ptr{},m_tail_ptr{},m_size{}
 	{
 		//Add other elements
 		add_from_other(other);
@@ -53,6 +53,11 @@ public:
 			add_from_other(other);
 		}
 		return *this;
+	}
+
+	size_t size()
+	{
+		return m_size;
 	}
 
 	void add_head(T t)
@@ -116,6 +121,7 @@ public:
 				{
 					m_size = 0;
 					m_head_ptr = m_tail_ptr = nullptr;
+					found = true;
 				}
 			} else {
 				//More than one element
@@ -182,11 +188,22 @@ public:
 		std::cout<<std::endl;
 	}
 
-	void delete_head()
+
+	inline bool empty()
 	{
+		if(m_head_ptr == nullptr)
+			return true;
+		else
+			return false;
+	}
+
+	std::optional<T> delete_head()
+	{
+		std::optional<T> temp {};
 		//Empty
 		if(m_head_ptr != nullptr)
 		{
+			temp = m_head_ptr->value;
 			m_head_ptr = m_head_ptr->next;
 			m_size--;
 			if(m_head_ptr == nullptr)
@@ -194,14 +211,17 @@ public:
 				m_tail_ptr=m_head_ptr;
 			}
 		}
+		return temp;
 	}
 
-	void delete_tail()
+	std::optional<T> delete_tail()
 	{
+		std::optional<T> temp {};
 		if(m_head_ptr != nullptr)
 		{
 			if(m_head_ptr->next == nullptr)
 			{
+				temp = m_tail_ptr->value;
 				//One element in the list
 				m_tail_ptr = m_head_ptr = nullptr;
 			}
@@ -213,11 +233,13 @@ public:
 				{
 					itr_ptr = itr_ptr->next;
 				}
+				temp = m_tail_ptr->value;
 				itr_ptr->next = nullptr;
 				m_tail_ptr =  itr_ptr;
 			}
 			m_size--;
 		}
+		return temp;
 	}
 
 	bool is_empty()
@@ -235,6 +257,11 @@ public:
 	node_ptr<T> get_head_node() const
 	{
 		return m_head_ptr;
+	}
+
+	node_ptr<T> get_tail_node() const
+	{
+		return m_tail_ptr;
 	}
 
 private:
@@ -258,7 +285,7 @@ private:
 		node_ptr<T> temp_itr = other.get_head_node();
 		while(temp_itr != nullptr)
 		{
-			add_to_tail(temp_itr->value);
+			add_tail(temp_itr->value);
 			temp_itr=temp_itr->next;
 		}
 	}

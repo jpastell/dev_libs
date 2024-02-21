@@ -147,6 +147,10 @@ public:
 					//Move the current node to the next
 					p_temp_node= p_temp_node->next;
 				}
+				if(p_head->next == nullptr)
+				{
+					p_tail = p_head;
+				}
 			}
 
 		}

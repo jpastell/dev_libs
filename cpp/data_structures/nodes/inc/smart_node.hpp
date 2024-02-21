@@ -15,11 +15,6 @@ struct Smart_data_node {
 		next =next_ptr;
 	}
 
-	~Smart_data_node()
-	{
-		std::cout<<"Deliting: " << value << std::endl;
-	}
-
 	T value;
 	std::shared_ptr<Smart_data_node<T>> next;
 };
