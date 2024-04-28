@@ -196,5 +196,124 @@ public:
 		
 	}
 
+	//---------------------------------------------------------------
+	//Practice functions
+	//---------------------------------------------------------------
+	void test_breadth_traversal()
+	{
+		std::queue<std::shared_ptr<Tree_node<T>>> node_q;
+		node_q.push(root);
+		while(!node_q.empty())
+		{
+			std::shared_ptr<Tree_node<T>> temp_ptr =  node_q.front();
+			node_q.pop();
+			std::cout << temp_ptr->value << ",";
+			if(temp_ptr->left)
+			{
+				node_q.push(temp_ptr->left);
+			}
+			if(temp_ptr->right)
+			{
+				node_q.push(temp_ptr->right);
+			}
+		}
+
+		std::cout << std::endl;
+	}
+
+	void practice_preorder()
+	{
+		std::stack<std::shared_ptr<Tree_node<T>>> node_stack;
+
+		std::shared_ptr<Tree_node<T>> itr = root;
+
+		do
+		{
+			if(itr)
+			{
+				std::cout << itr->value << ",";
+			} else {
+				if(!node_stack.empty())
+				{
+					//If there is something here there is a rigth
+					itr = node_stack.top();
+					node_stack.pop();
+					itr = itr->right;
+					std::cout << itr->value << ",";
+
+				}
+			}
+
+			if(itr->right)
+			{
+				node_stack.push(itr);
+			}
+
+			itr = itr->left;
+
+
+		}while(itr != nullptr || !node_stack.empty());
+
+		std::cout << std::endl;
+	}
+
+	void practice_inorder()
+	{
+		std::stack<std::shared_ptr<Tree_node<T>>> node_stack;
+		std::shared_ptr<Tree_node<T>> itr = root;
+		do
+		{
+			if(itr)
+			{
+				node_stack.push(itr);
+			} else {
+				itr = node_stack.top();
+				node_stack.pop();
+				std::cout << itr->value << ",";
+				if(itr->right)
+				{
+					itr = itr->right;
+					node_stack.push(itr);
+				} else {
+					itr = nullptr;
+				}
+			}
+
+			if(itr)itr=itr->left;
+
+		}while(itr != nullptr || !node_stack.empty());
+
+		std::cout << std::endl;
+	}
+
+	void practice_postorder()
+	{
+		std::stack<std::shared_ptr<Tree_node<T>>> logic_stack;
+		std::stack<std::shared_ptr<Tree_node<T>>> print_stack;
+		if(root)logic_stack.push(root);
+		while(!logic_stack.empty())
+		{
+			auto temp = logic_stack.top();
+			logic_stack.pop();
+			print_stack.push(temp);
+
+			if(temp->left)
+			{
+				logic_stack.push(temp->left);
+			}
+			if(temp->right)
+			{
+				logic_stack.push(temp->right);
+			}
+		}
+
+		while(!print_stack.empty())
+		{
+			std::cout << print_stack.top()->value << ",";
+			print_stack.pop();
+
+		}
+		std::cout << std::endl;
+	}
 
 };

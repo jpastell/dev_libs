@@ -31,6 +31,18 @@ TEST(simple_test, delete_tail_size2)
 	tree.postorder_traversal();
 	std::cout << "In-order" << std::endl;
 	tree.inorder_traversal();
+
+	//Practice
+	std::cout << "Breadth test" << std::endl;
+	tree.test_breadth_traversal();
+	std::cout << "Pree test" << std::endl;
+	tree.practice_preorder();
+	std::cout << "Pree in" << std::endl;
+	tree.practice_inorder();
+	std::cout << "post testin" << std::endl;
+	tree.practice_postorder();
+
+
 }
 
 int main(int nArgs, char** vArgs) {
