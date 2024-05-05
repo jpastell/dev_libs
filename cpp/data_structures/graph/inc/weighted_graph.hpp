@@ -72,16 +72,6 @@ class Graph
 		std::cout << "Process edge vertex:" << vertex << " adjacent: " << adjacent << std::endl;
 	}
 
-	void find_path(std::optional<size_t>start , std::optional<size_t> end)
-	{
-		if(start == end  || end == std::nullopt)
-		{
-			std::cout << start.value() << std::endl;
-		} else {
-			find_path(start,parent[end.value()]);
-			std::cout << end.value() << std::endl;
-		}
-	}
 
 	size_t find_root(size_t vertex)
 	{
@@ -109,7 +99,7 @@ class Graph
 			return; //already in the same set
 		}
 
-		if(uf_size[r1] >= uf_parent[r2])
+		if(uf_size[r1] >= uf_size[r2])
 		{
 			uf_size[r1] += uf_size[r2];
 			uf_parent[r2] = r1;
@@ -292,6 +282,66 @@ public:
 			}
 		}
 		return weight;
+	}
+
+	unsigned int dijktra(size_t start)
+	{
+		size_t vertex = start;
+		distance[vertex]=0;
+		unsigned int local_dist;
+		unsigned int weight = 0;
+		std::shared_ptr<Edge_node> temp;
+
+		init_containers();
+
+		while(!in_tree[vertex])
+		{
+			//add it to the tree
+			in_tree[vertex]=true;
+			if(vertex != start)
+			{
+				std::cout << "Edge " << parent[vertex].value() << " to " << vertex << std::endl;
+				weight += local_dist;
+			}
+
+			//Populate the distance of all vertices connected to the current vertex and populate the parent
+			temp =  edges[vertex];
+			while(temp)
+			{
+				unsigned int candidate = temp->adjacent;
+				if((distance[candidate] > distance[vertex]+temp->weight) && (!in_tree[candidate]))
+				{
+					distance[candidate] = distance[vertex]+temp->weight;
+					parent[candidate] = vertex;
+				}
+				temp = temp->next;
+			}
+
+			//Select the
+			local_dist = std::numeric_limits<unsigned int>::max();
+			for(size_t i = 0 ; i <= num_vertices; i++)
+			{
+				if((!in_tree[i]) && (local_dist > distance[i]))
+				{
+					// std::cout << "i=" << i << " local_dist=" << local_dist << " distance[i]=" << distance[i] << std::endl;
+					local_dist = distance[i];
+					vertex=i;
+				}
+			}
+
+		}
+		return weight;
+	}
+
+	void find_path(std::optional<size_t>start , std::optional<size_t> end)
+	{
+		if(start == end  || end == std::nullopt)
+		{
+			std::cout << start.value() << std::endl;
+		} else {
+			find_path(start,parent[end.value()]);
+			std::cout << end.value() << std::endl;
+		}
 	}
 
 };

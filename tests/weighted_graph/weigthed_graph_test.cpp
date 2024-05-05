@@ -25,7 +25,7 @@ TEST(Graph, graph_test)
     test_graph.insert_edge(3,4,5);
     test_graph.insert_edge(5,4,2);
 
-    test_graph.print();
+    test_graph.print(true);
     test_graph.print_number_vetices();
     std::cout << "Prim weight:" << std::endl;
     std::cout << test_graph.prim(1) << std::endl;
@@ -34,10 +34,10 @@ TEST(Graph, graph_test)
     std::cout << "Krustal:" << std::endl;
     std::cout << test_graph.kruskal() << std::endl;
 
+    std::cout << "Disjktra weight:" << std::endl;
+    std::cout << test_graph.dijktra(1) << std::endl;
 
-
-
-
+    test_graph.find_path(1,3);
 
 
     EXPECT_EQ(true,true); 
